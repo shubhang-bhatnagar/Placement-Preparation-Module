@@ -1,0 +1,22 @@
+class Solution{
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
+        // code here
+        ArrayList<Integer> subsetSum = new ArrayList<>();
+        func(arr, 0, new ArrayList<>(), subsetSum);
+        return subsetSum;
+    }
+    private void func(ArrayList<Integer> arr, int i, List<Integer> tmp, ArrayList<Integer> subsetSums) {
+        if (i == arr.size()) {
+            int sum = 0;
+            for(int num : tmp) {
+                sum += num;
+            }
+            subsetSums.add(sum);
+            return;
+        }
+        func(arr, i + 1, tmp, subsetSums);
+        tmp.add(arr.get(i));
+        func(arr, i + 1, tmp, subsetSums);
+        tmp.remove(tmp.size() - 1);
+    }
+}
