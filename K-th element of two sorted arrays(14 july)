@@ -1,0 +1,31 @@
+int kthElement(int arr1[], int arr2[], int n, int m, int k)
+    {
+        int i=0;
+        int j=0;
+        int cnt =k;
+        
+        while(i<n && j<m){
+            if(cnt==1){
+                return arr1[i]<arr2[j]? arr1[i] : arr2[j];
+            }
+            else if(arr1[i]<arr2[j]){
+                i++;
+                cnt--;
+            }
+            else {
+                j++;
+                cnt--;
+            }
+        }
+        while(i<n){
+            if(cnt==1) return arr1[i];
+            cnt--;
+            i++;
+        }
+        while(j<m ){
+            if(cnt==1) return arr2[j];
+            cnt--;
+            j++;
+        }
+    }
+
