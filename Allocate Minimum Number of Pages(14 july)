@@ -1,0 +1,36 @@
+public class Solution {
+public int books(ArrayList A, int B) {
+if(B>A.size()){
+return -1;
+
+    }
+    
+    int max=0, min=0, ans=0;
+    for(int i=0;i<A.size();i++){
+        max+=A.get(i);
+        min=Math.max(min,A.get(i));
+    }
+    
+    while(min <= max){
+        int mid=(min+max)/2;
+        if(isFeasiable(A,B,mid)){
+            ans=mid;
+            max=mid-1;
+        }else{
+            min=mid+1;
+        }
+    }
+    return ans;
+}
+
+    boolean isFeasiable(ArrayList<Integer>A,int  k,int ans){
+    int student=1, sum=0;
+    for(int i=0;i<A.size();i++){
+        if(sum+A.get(i)>ans){
+            student++; sum=A.get(i);
+        }else{
+            sum+=A.get(i);
+        }
+    }
+    return student<=k;
+}
