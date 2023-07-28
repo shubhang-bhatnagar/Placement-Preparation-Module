@@ -1,0 +1,19 @@
+public class Solution {
+	static void tree(BinaryTreeNode root,String st,ArrayList<String> arr){
+		if(root==null || (root.left==null && root.right==null)){
+			arr.add(st+root.data);
+			return;
+		}
+
+		st+=root.data+" ";
+		if(root.left!=null) tree(root.left,st,arr);
+		if(root.right!=null) tree(root.right,st,arr);
+		st =st.substring(0,st.length()-1);
+	}
+
+	public static ArrayList<String> allRootToLeaf(BinaryTreeNode root) {
+		ArrayList<String> arr =new ArrayList<String>();
+		tree(root,"",arr);
+		return arr;
+	}
+}
