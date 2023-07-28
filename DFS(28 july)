@@ -1,0 +1,25 @@
+public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+        // Code here
+        ArrayList<Integer> ans = new ArrayList<>();
+        ArrayList<Integer> al = new ArrayList<>();
+        int visit[] = new int[V];
+        al.add(0);
+        while(!al.isEmpty()){
+            int x = al.remove(0);
+            
+            ans.add(x);
+            visit[x] = 1;
+            ArrayList<Integer> y = adj.get(x);
+            int i=0;
+            for(int k : y){
+                if(visit[k]!=1){
+                    if(al.contains(k)){
+                        al.remove(Integer.valueOf(k));
+                    }
+                    al.add(i++,k);
+                }
+            }
+            
+        }
+        return ans;
+    }
