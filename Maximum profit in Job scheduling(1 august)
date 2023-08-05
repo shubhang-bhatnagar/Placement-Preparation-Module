@@ -1,0 +1,33 @@
+class myCmp implements Comparator<Job>{
+    public int compare(Job a,Job b){
+        return b.profit-a.profit;
+    }
+}
+class Solution
+{
+    int[] JobScheduling(Job arr[], int n)
+    {
+        // Your code here
+        Arrays.sort(arr,new myCmp());
+        boolean done[]=new boolean[n];
+        for(int i=0;i<n;i++){
+            done[i]=false;
+        }
+        
+        int day=0,profit=0;
+        for(int i=0;i<n;i++){
+            for(int j=Math.min(arr[i].deadline-1,n);j>=0;j--){
+                if(done[j]==false){
+                    day+=1;
+                    profit+=arr[i].profit;
+                    done[j]=true;
+                    break;
+                }
+            }
+        }
+        int ans[]=new int[2];
+        ans[0]=day;
+        ans[1]=profit;
+        return ans;
+    }
+}
