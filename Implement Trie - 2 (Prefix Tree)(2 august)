@@ -1,0 +1,191 @@
+import java.util.* ;
+
+import java.io.*; 
+
+class TrieNode{
+
+    char root;
+
+    boolean terminal;
+
+    TrieNode[] children;
+
+    int [] cnt;
+
+    public TrieNode(char root){
+
+        this.root=root;
+
+        children= new TrieNode[26];
+
+        cnt= new int[26];
+
+        terminal=false;
+
+    } 
+
+}
+
+public class Trie {
+
+    private TrieNode root;
+
+    public Trie() {
+
+        // Write your code here.
+
+        root= new TrieNode('0');
+
+ 
+
+    }
+
+    public void insertHelper(TrieNode root, String word){
+
+        if(word.length()==0){
+
+            root.terminal=true;
+
+            return;
+
+        }
+
+        int loc=word.charAt(0)-'a';
+
+        if(root.children[loc]==null){
+
+            root.children[loc]= new TrieNode(word.charAt(0));
+
+            root.cnt[loc]++;
+
+        }
+
+        else{
+
+            root.cnt[loc]++;
+
+        }
+
+        insertHelper(root.children[loc], word.substring(1));
+
+    }
+
+ 
+
+    public void insert(String word) {
+
+        // Write your code here.
+
+        insertHelper(root,word);
+
+    }
+
+ 
+
+    public int helpercnt(TrieNode root, String word){
+
+        if(word.length()==0){
+
+            if(!root.terminal)  return 0;
+
+            return Integer.MAX_VALUE;
+
+        }
+
+        int loc=word.charAt(0)-'a';
+
+        if(root.children[loc]==null){
+
+            return 0;
+
+        }
+
+        return Math.min(root.cnt[loc],helpercnt(root.children[loc], word.substring(1)));
+
+    }
+
+    public int countWordsEqualTo(String word) {
+
+        // Write your code here.
+
+        return helpercnt(root,word);
+
+    }
+
+ 
+
+    public int Start(TrieNode root, String word){
+
+        if(word.length()==0){
+
+            return Integer.MAX_VALUE;
+
+        }
+
+        int loc=word.charAt(0)-'a';
+
+        if(root.children[loc]==null)    return 0;
+
+        return Math.min(root.cnt[loc],Start(root.children[loc],word.substring(1)));
+
+    }
+
+    public int countWordsStartingWith(String word) {
+
+        // Write your code here.
+
+        return Start(root,word);
+
+    }
+
+ 
+
+    public void eraseHelper(TrieNode root,  String word){
+
+        if(word.length()==0){
+
+            root.terminal=false;
+
+            return;
+
+        }
+
+        int loc=word.charAt(0)-'a';
+
+        if(root.children[loc]==null){
+
+            return;
+
+        }
+
+        else{
+
+            root.cnt[loc]--;
+
+        }
+
+        eraseHelper(root.children[loc], word.substring(1));
+
+        if(root.cnt[loc]==0){
+
+            root.children[loc]=null;
+
+        }
+
+        return;
+
+ 
+
+    }
+
+    public void erase(String word) {
+
+        // Write your code here.
+
+        eraseHelper(root,word);
+
+    }
+
+ 
+
+}
