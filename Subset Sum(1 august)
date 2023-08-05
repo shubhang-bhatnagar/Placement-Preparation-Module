@@ -1,0 +1,18 @@
+class Solution{
+    public boolean canPartition(int[] nums) {
+        int sum = Arrays.stream(nums).sum();
+        if(sum % 2 != 0) return false;
+        int[][] memo = new int[nums.length + 1][sum / 2 + 1];
+        for (int[] row: memo) Arrays.fill(row, -1);
+        return slv(nums.length, sum / 2, nums, memo);
+    }
+
+    private boolean slv(int n, int targetSum, int[] arr, int[][] memo) {
+        if (targetSum == 0) return true;
+        if(n == 0 || targetSum < 0) return false;
+        if(memo[n][targetSum] != -1) return memo[n][targetSum] == 1;
+        boolean takeNum = slv(n-1, targetSum - arr[n-1], arr, memo);
+        memo[n][targetSum] = takeNum || slv(n-1, targetSum, arr, memo) ? 1 : 0;
+        return memo[n][targetSum] == 1;
+    }
+}
